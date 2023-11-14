@@ -27,6 +27,10 @@ export class Track {
     properties: Omit<TrackProperties, 'id'>,
     id: string = randomUUID(),
   ): Track {
-    return new Track({ ...properties, id });
+    return new Track({
+      ...properties,
+      id,
+      imageUrl: properties.imageUrl || '',
+    });
   }
 }
