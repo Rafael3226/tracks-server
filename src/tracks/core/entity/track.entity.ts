@@ -24,13 +24,13 @@ export class Track {
   }
 
   static create(
-    properties: Omit<TrackProperties, 'id'>,
+    properties: Omit<TrackProperties, 'id' | 'isDownloaded'>,
     id: string = randomUUID(),
   ): Track {
     return new Track({
       ...properties,
       id,
-      imageUrl: properties.imageUrl || '',
+      isDownloaded: false,
     });
   }
 }
