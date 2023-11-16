@@ -18,8 +18,8 @@ export class Genre {
     id: string = randomUUID(),
   ): Genre {
     return new Genre({
-      ...properties,
       id,
+      ...properties,
     });
   }
 }

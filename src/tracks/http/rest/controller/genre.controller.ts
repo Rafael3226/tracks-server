@@ -4,12 +4,12 @@ import { GenreDto } from '../dto/genre.dto';
 import { ListGenreUseCase } from '@src/tracks/core/use-case/list-genre.use-case';
 
 @Controller('genre')
-export class TrackController {
+export class GenreController {
   constructor(private readonly listGenreUseCase: ListGenreUseCase) {}
 
   @Get()
   @ApiOkResponse({ description: 'List all genres', type: [GenreDto] })
-  async listGenres() {
+  async listGenre() {
     try {
       return await this.listGenreUseCase.execute();
     } catch (error) {
