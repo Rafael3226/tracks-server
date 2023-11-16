@@ -1,4 +1,5 @@
 import { randomUUID } from 'crypto';
+import { Genre } from './genre.entity';
 
 export type TrackProperties = {
   readonly id: string;
@@ -6,8 +7,7 @@ export type TrackProperties = {
   artist: string;
   label: string;
   imageUrl: string;
-  genre: string;
-  isDownloaded: boolean;
+  genre: Genre;
 };
 
 export class Track {
@@ -17,20 +17,18 @@ export class Track {
   label: TrackProperties['label'];
   imageUrl: TrackProperties['imageUrl'];
   genre: TrackProperties['genre'];
-  isDownloaded: TrackProperties['isDownloaded'];
 
   constructor(data: TrackProperties) {
     Object.assign(this, data);
   }
 
   static create(
-    properties: Omit<TrackProperties, 'id' | 'isDownloaded'>,
+    properties: Omit<TrackProperties, 'id'>,
     id: string = randomUUID(),
   ): Track {
     return new Track({
-      ...properties,
       id,
-      isDownloaded: false,
+      ...properties,
     });
   }
 }

@@ -1,14 +1,21 @@
 import { PrismaClient } from '@prisma/client';
-import { readJsonFile } from '../../../util/readJsonFile';
+import { readJsonFile } from '../../../util/read-json-file';
 import { randomUUID } from 'crypto';
 
-const prisma = new PrismaClient();
-
-async function main() {
+export async function seedTracks(prisma: PrismaClient): Promise<void> {
   const dataFile = './src/shared/persistence/prisma/seed/tracks.json';
   const tracksData = readJsonFile(dataFile);
   if (!tracksData) throw new Error('Is not possible to load json.');
-  tracksData.forEach(async (t) => {
+  const genreMap = new Map();
+
+  for (const t of tracksData) {
+    const genreName: string = t['genre'] || '';
+    if (!genreMap.has(genreName)) {
+      const genre = { id: randomUUID(), name: genreName };
+      await prisma.genre.create({ data: genre });
+      genreMap.set(genreName, genre.id);
+    }
+
     const id: string = randomUUID();
     await prisma.track.create({
       data: {
@@ -17,21 +24,8 @@ async function main() {
         artist: t['artist'] || '',
         label: t['label'] || '',
         imageUrl: t['imageURL'] || '',
-        genre: t['genre'] || '',
-        isDownloaded: false,
+        genreId: genreMap.get(genreName),
       },
     });
-  });
+  }
 }
-
-main()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async () => {
-    console.log(
-      'Database seed could not be completed. Probably the data already exists',
-    );
-    await prisma.$disconnect();
-    process.exit(0);
-  });

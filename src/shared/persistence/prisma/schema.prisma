@@ -10,12 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Genre {
+  id    String  @id
+  name  String  @unique
+  Track Track[]
+}
+
+model File {
+  id      String  @id
+  path    String  @unique
+  Track   Track?  @relation(fields: [trackId], references: [id])
+  trackId String?
+}
+
 model Track {
-  id           String  @id
-  title        String
-  artist       String
-  label        String
-  imageUrl     String
-  genre        String
-  isDownloaded Boolean @default(false)
+  id       String @id
+  title    String
+  artist   String
+  label    String
+  imageUrl String
+  genre    Genre  @relation(fields: [genreId], references: [id])
+  genreId  String
+  File     File[]
 }
