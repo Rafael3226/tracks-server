@@ -22,8 +22,7 @@ export class TrackRepository {
           artist: track.artist,
           label: track.label,
           imageUrl: track.imageUrl,
-          genre: track.genre,
-          isDownloaded: track.isDownloaded,
+          genreId: track.genre.id,
         },
       });
     } catch (error) {

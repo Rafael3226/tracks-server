@@ -19,9 +19,4 @@ export class TrackDto extends CreateTrackDto {
   @IsNotEmpty()
   @ApiProperty({ type: String, required: true })
   readonly id?: string;
-
-  @IsUUID()
-  @IsNotEmpty()
-  @ApiProperty({ type: Boolean, required: true })
-  readonly isDownloaded?: boolean;
 }
