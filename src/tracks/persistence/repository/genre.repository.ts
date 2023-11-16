@@ -35,6 +35,15 @@ export class GenreRepository {
     }
   }
 
+  async findById(id: string): Promise<Genre> {
+    try {
+      const equipment = await this.model.findUnique({ where: { id } });
+      return Genre.create(equipment);
+    } catch (error) {
+      this.handleAndThrowError(error);
+    }
+  }
+
   protected handleAndThrowError(error: unknown): never {
     const errorMessage = this.extractErrorMessage(error);
     if (error instanceof PrismaClientValidationError) {

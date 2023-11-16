@@ -22,7 +22,7 @@ export class TrackController {
         artist: createTrackDto.artist,
         label: createTrackDto.label,
         imageUrl: createTrackDto.imageUrl,
-        genre: createTrackDto.genre,
+        genreId: createTrackDto.genreId,
       });
     } catch (error) {
       throw new HttpException(

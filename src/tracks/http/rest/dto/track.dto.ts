@@ -11,7 +11,7 @@ export class CreateTrackDto {
   @ApiProperty({ type: String, required: true })
   readonly imageUrl?: string;
   @ApiProperty({ type: String, required: true })
-  readonly genre?: string;
+  readonly genreId?: string;
 }
 
 export class TrackDto extends CreateTrackDto {
